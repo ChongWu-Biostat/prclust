@@ -1,0 +1,12 @@
+Package: prclust
+Type: Package
+Title: Penalized regression-based clustering method
+Version: 1.0
+Date: 2015-10-30
+Depends: R (>= 3.0.0)
+Author: Chong Wu, Wei Pan
+Maintainer: Chong Wu <wuxx0845@umn.edu>
+Description: Two algorithm for fitting the penalized regression-based clustering model. One algorithm is based on quadratic penalty and difference convex method. Another algorithm is based on difference convex and ADMM. Generalized cross validation was provided to select the tuning parameters. Rand index, adjusted Rand index and Jaccard index were provided to estimate the agreement between estimated cluster memberships and the truth.
+License: GPL-2 | GPL-3
+Imports: Rcpp (>= 0.12.1), parallel
+LinkingTo: Rcpp
