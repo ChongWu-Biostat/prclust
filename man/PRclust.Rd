@@ -5,7 +5,8 @@
 Find the solution of penalized regression-based clustering.
 }
 \description{
-PRclust creates a list of clustering results, including group number, iteration time, the centroid of observation (mu).
+	Clustering is unsupervised and exploratory in nature. Yet, it can be performed through penalized regression with grouping pursuit
+. Prclust helps us peform penalized regression-based clustering with various loss functions and grouping penalities via two algorithm (DC-ADMM and quadratic penalty).
 }
 \usage{
 PRclust(data, lambda1, lambda2, tau, 
@@ -29,7 +30,7 @@ PRclust(data, lambda1, lambda2, tau,
 }
 
 \item{loss.method }{
-      The loss method. "lasso" stands for \eqn{L_1} loss penalty.   
+      The loss method. "lasso" stands for \eqn{L_1} loss function, while "quadratic" stands for the quadratic loss function.  
 }
   \item{group.method}{
     character: may be abbreviated. "gtlp" means generalized group lasso is used for grouping penalty. "lasso" means lasso is used for grouping penalty. "SCAD" and "MCP" are two other non-convex penalty.
@@ -52,6 +53,8 @@ The return value is a list. In this list, it contains the following matrix.
 }
 \references{
 Pan Wei, Xiaotong Shen, and Binghui Liu. "Cluster Analysis: Unsupervised Learning via Supervised Learning with a Non-convex Penalty." \emph{The Journal of Machine Learning Research} 14.1 (2013):1865-1889.
+
+Chong Wu, Sunghoon Kwon, Xiaotong Shen and Wei Pan. "A new Algorithm and Theory for Penalized Regression-based Clustering", submitted. 
 }
 \author{
 Chong Wu, Wei Pan
@@ -68,7 +71,7 @@ Choosing tunning parameter is kind of time consuming job. It is always based on 
 \examples{
 library("prclust")
 # To let you have a better understanding about the power and strength
-# of PRclust method, 6 examples were provided.
+# of PRclust method, 6 examples in original prclust paper were provided.
 ################################################
 ### case 1
 ################################################

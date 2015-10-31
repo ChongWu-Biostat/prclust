@@ -5,16 +5,14 @@
 External evaluation of cluster results
 }
 \description{
-Suppose we know the true cluster results. This function provides Rand, adjusted Rand, Jaccard index to measure the quality of a cluster results.
+Suppose we know the true cluster results beforehand. clusterStat provides Rand, adjusted Rand, Jaccard index to measure the quality of a cluster results.
 }
 \usage{
 clusterStat(trueGroup, group)
 }
 \arguments{
-  \item{trueGroup}{The true cluster results.
-}
-  \item{group}{The estimated cluster results, not neccessary calculating by PRclust.
-}
+  \item{trueGroup}{The true cluster results.}
+  \item{group}{The estimated cluster results, not neccessary calculating by PRclust.}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -36,8 +34,6 @@ Chong Wu
 %%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
@@ -48,7 +44,5 @@ Chong Wu
 	b
 	clusterStat(a,b)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{clusterStat}

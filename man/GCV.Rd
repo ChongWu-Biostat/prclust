@@ -32,13 +32,13 @@ GCV(data,lambda1,lambda2,tau,sigma,B=100,
   	 The Monte Carlo time. The defualt value is 100.
 }
 \item{loss.method }{
-      The loss method. "lasso" stands for \eqn{L_1} loss penalty.   
+     character may be abbreviated. "lasso" stands for \eqn{L_1} loss function, while "quadratic" stands for the quadratic loss function.  
 }
   \item{group.method}{
   	character: may be abbreviated. "gtlp" means generalized group lasso is used for grouping penalty. "lasso" means lasso is used for grouping penalty. "SCAD" and "MCP" are two other non-convex penalty.
 }
   \item{algorithm}{
-	character: may be abbreviated. The algorithm to use for finding the solution. The default algorithm is "ADMM", which stands for the new algorithm we developed.
+	character: may be abbreviated. The algorithm will use for finding the solution. The default algorithm is "ADMM", which stands for the DC-ADMM.
 }
 \item{epsilon}{The stopping critetion parameter. The default is 0.001.
 }
@@ -70,6 +70,7 @@ Chong Wu, Wei Pan
 }
 \examples{
 set.seed(1)
+library("prclust")
 data = matrix(NA,2,50)
 data[1,1:25] = rnorm(25,0,0.33)
 data[2,1:25] = rnorm(25,0,0.33)
@@ -77,21 +78,15 @@ data[1,26:50] = rnorm(25,1,0.33)
 data[2,26:50] = rnorm(25,1,0.33)
 
 #case 1
-lambda1 =1
-lambda2 = 1
-tau = 0.5
-sigma = 0.25
-gcv1 = GCV(data,lambda1,lambda2,tau,sigma)
+gcv1 = GCV(data,lambda1=1,lambda2=1,tau=0.5,sigma=0.25)
 gcv1
 
 #case 2
-lambda2 = 0.7
-tau =0.3
-gcv2 = GCV(data,lambda1,lambda2,tau,sigma)
+gcv2 = GCV(data,lambda1=1,lambda2=0.7,tau=0.3,sigma=0.25)
 gcv2
 
-# Note that the tuning parameters in case 1 is better than 
-# tuning parameters in case 2 and the value of GCV in case 1 is
+# Note that the combination of tuning parameters in case 1 are better than 
+# the combination of tuning parameters in case 2 since the value of GCV in case 1 is
 # less than the value in case 2.
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

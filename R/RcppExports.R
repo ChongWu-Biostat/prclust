@@ -79,7 +79,7 @@ clusterStat <- function(trueGroup, group) {
 
 
 
-prclust <- function(data, lambda1, lambda2, tau, loss.method = c("quadratic","lasso"),group.method = c("gtlp","lasso","SCAD","MCP"), algorithm = c("ADMM","Quadratic"),epsilon = 0.001) {
+PRclust <- function(data, lambda1, lambda2, tau, loss.method = c("quadratic","lasso"),group.method = c("gtlp","lasso","SCAD","MCP"), algorithm = c("ADMM","Quadratic"),epsilon = 0.001) {
     ## judge for different situation
     mumethods = switch(match.arg(loss.method), `quadratic` = 0,lasso = 1)
     methods = switch(match.arg(group.method), `gtlp` = 0,lasso = 1, MCP = 2, SCAD = 3)
