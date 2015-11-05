@@ -1,7 +1,7 @@
 \name{GCV}
 \alias{GCV}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Calculate the generalized cross-validation statistic (GCV)}
+\title{Calculate the Generalized Cross-Validation Statistic (GCV)}
 \description{
 Calculate the generalized cross-validation statistic with generalized degrees of freedom.
 }
@@ -59,15 +59,6 @@ Pan Wei, Xiaotong Shen, and Binghui Liu. "Cluster Analysis: Unsupervised Learnin
 \author{
 Chong Wu, Wei Pan
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 set.seed(1)
 library("prclust")
@@ -78,11 +69,11 @@ data[1,26:50] = rnorm(25,1,0.33)
 data[2,26:50] = rnorm(25,1,0.33)
 
 #case 1
-gcv1 = GCV(data,lambda1=1,lambda2=1,tau=0.5,sigma=0.25)
+gcv1 = GCV(data,lambda1=1,lambda2=1,tau=0.5,sigma=0.25,B =10)
 gcv1
 
 #case 2
-gcv2 = GCV(data,lambda1=1,lambda2=0.7,tau=0.3,sigma=0.25)
+gcv2 = GCV(data,lambda1=1,lambda2=0.7,tau=0.3,sigma=0.25,B = 10)
 gcv2
 
 # Note that the combination of tuning parameters in case 1 are better than 

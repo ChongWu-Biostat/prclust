@@ -1,6 +1,6 @@
 Package: prclust
 Type: Package
-Title: Penalized regression-based clustering method
+Title: Penalized Regression-Based Clustering Method
 Version: 1.0
 Date: 2015-10-30
 Depends: R (>= 3.0.0)

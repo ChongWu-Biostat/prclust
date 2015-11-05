@@ -2,11 +2,10 @@
 \alias{PRclust}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Find the solution of penalized regression-based clustering.
+Find the Solution of Penalized Regression-Based Clustering.
 }
 \description{
-	Clustering is unsupervised and exploratory in nature. Yet, it can be performed through penalized regression with grouping pursuit
-. Prclust helps us peform penalized regression-based clustering with various loss functions and grouping penalities via two algorithm (DC-ADMM and quadratic penalty).
+	Clustering is unsupervised and exploratory in nature. Yet, it can be performed through penalized regression with grouping pursuit. Prclust helps us peform penalized regression-based clustering with various loss functions and grouping penalities via two algorithm (DC-ADMM and quadratic penalty).
 }
 \usage{
 PRclust(data, lambda1, lambda2, tau, 
@@ -63,11 +62,7 @@ Chong Wu, Wei Pan
 Choosing tunning parameter is kind of time consuming job. It is always based on "trials and errors".
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 library("prclust")
 # To let you have a better understanding about the power and strength
@@ -93,168 +88,6 @@ lambda1 =1
 lambda2 = 1
 tau = 0.5
 a =PRclust(data ,lambda1,lambda2,tau, algorithm ="Quadratic")
-a
-###################################################
-#### case 2
-###################################################
-x1 = -1 + 2*c(0:99)/99
-data = matrix(NA,2,200)
-data[1,1:100] = x1
-temp = (rbinom(100,1,0.5)*2-1)*sqrt(1-x1^2)
-temp = temp +runif(100,min = -0.1,max = 0.1)
-
-data[2,1:100] = temp
-
-x2 = -2 + 4*c(0:99)/99
-data[1,101:200] = x2
- temp = (rbinom(100,1,0.5)*2-1)*sqrt(4-x2^2)
- temp = temp +runif(100,min = -0.1,max = 0.1)
-data[2,101:200] =temp
-
-## set the tunning parameter
-lambda1 =1
-lambda2 = 30
-tau = 0.6
-a =PRclust(data ,lambda1,lambda2,tau)
-a
-## quadratic penalty
-lambda1 =1
-lambda2 = 1
-tau = 0.5
-a =PRclust(data ,lambda1,lambda2,tau, algorithm ="Quadratic")
-a
-
-##################################################
-### case 3
-##################################################
-data = matrix(runif(10*200),10,200)
-## set the tunning parameter
-lambda1 =1
-lambda2 =5
-tau = 1
-a =PRclust(data ,lambda1,lambda2,tau)
-a
-
-## quadratic penalty
-lambda1 =1
-lambda2 =1
-tau = 1
-a =PRclust(data ,lambda1,lambda2,tau, algorithm ="Quadratic")
-a
-##################################################
-### case 4
-##################################################
-### generate the data set, it's kind of complicate
-judge = 1
-while(judge != 0)
-{
-tempCenter = matrix(rnorm(12,0,5),3,4)
-c1 = tempCenter[,1]
-c2 = tempCenter[,2]
-c3 = tempCenter[,3]
-c4 = tempCenter[,4]
-
-tempObs1 = 25 + rbinom(1,1,0.5)*25
-tempObs2 = 25 + rbinom(1,1,0.5)*25
-tempObs3 = 25 + rbinom(1,1,0.5)*25
-tempObs4 = 25 + rbinom(1,1,0.5)*25
-
-Obs = tempObs1 + tempObs2 + tempObs3 + tempObs4
-data = matrix(NA,3,Obs)
-data[1,1:tempObs1] = rnorm(tempObs1,c1[1],1)
-data[2,1:tempObs1] = rnorm(tempObs1,c1[2],1)
-data[3,1:tempObs1] = rnorm(tempObs1,c1[3],1)
-
-data[1,(tempObs1+1):(tempObs1 + tempObs2)] = rnorm(tempObs2,c2[1],1)
-data[2,(tempObs1+1):(tempObs1 + tempObs2)] = rnorm(tempObs2,c2[2],1)
-data[3,(tempObs1+1):(tempObs1 + tempObs2)] = rnorm(tempObs2,c2[3],1)
-
-data.index = (tempObs1+tempObs2+1):(tempObs1 + tempObs2 +tempObs3)
-data[1, data.index] = rnorm(tempObs3,c3[1],1)
-data[2, data.index] = rnorm(tempObs3,c3[2],1)
-data[3, data.index] = rnorm(tempObs3,c3[3],1)
-
-data[1,(tempObs1 + tempObs2 +tempObs3+1):Obs] = rnorm(tempObs4,c4[1],1)
-data[2,(tempObs1 + tempObs2 +tempObs3+1):Obs] = rnorm(tempObs4,c4[2],1)
-data[3,(tempObs1 + tempObs2 +tempObs3+1):Obs] = rnorm(tempObs4,c4[3],1)
-    
-a =as.matrix(dist(t(data)))
-if((min(a[1:tempObs1,(tempObs1+1):Obs]) <1 | 
-min(a[(tempObs1+1):(tempObs1+tempObs2),(tempObs1+tempObs2+1):Obs])<1
-| min(a[(tempObs1+tempObs2+1):(tempObs1+tempObs2+tempObs3),
-(tempObs1+tempObs2+tempObs3+1):Obs])<1 )== 0)
-    judge =0
-}
-
-## set the tunning parameter
-lambda1 =1
-lambda2 =10
-tau =3
-a =PRclust(data,lambda1,lambda2,tau)
-a
-
-## quadratic penalty
-lambda1 =1
-lambda2 =1.8
-tau =2.3
-a =PRclust(data,lambda1,lambda2,tau, algorithm ="Quadratic")
-a
-
-#############################################
-#### case 5
-#############################################
-## generate the data set
-x1 = -0.5 + c(0:99)/99
-data = matrix(NA,3,200)
-data[1,1:100] = x1 + rnorm(100,0,0.1)
-data[2,1:100] = x1 + rnorm(100,0,0.1)
-data[3,1:100] = x1 + rnorm(100,0,0.1)
-
-data[1,101:200] = x1 + 2 + rnorm(100,0,0.1)
-data[2,101:200] = x1 + 2 + rnorm(100,0,0.1)
-data[3,101:200] = x1 + 2 + rnorm(100,0,0.1)
-
-## set the tunning parameter
-lambda1 =1
-lambda2 = 1
-tau = 0.5
-a =PRclust(data,lambda1,lambda2,tau)
-a
-
-## quadratic penalty
-lambda1 =1
-lambda2 = 0.45
-tau = 0.35
-a =PRclust(data,lambda1,lambda2,tau)
-a
-
-#############################################
-### case 6
-############################################
-data = matrix(NA,2,150)
-data[1,1:50] =1.5*sin(2*pi*(30+c(0:49)*5)/360)
-temp = 1.5*cos(2*pi*(30+c(0:49)*5)/360) 
-temp = temp + runif(50,-0.025,0.025)
-data[2,1:50] = temp
-data[1,51:100] = rnorm(50,0,0.1)
-data[2,51:100] = rnorm(50,0,0.1)
-
-data[1,101:150] = rnorm(50,0.8,0.1)
-data[2,101:150] = rnorm(50,0,0.1)
-#plot(data[1,],data[2,])
-## set the tunning parameter
-lambda1 =1
-lambda2 = 1
-tau = 0.35
-a =PRclust(data,lambda1,lambda2,tau)
-a
-
-# quadratic penalty
-## set the tunning parameter
-lambda1 =1
-lambda2 = 0.5
-tau = 0.4
-a =PRclust(data,lambda1,lambda2,tau, algorithm ="Quadratic")
 a
 
 }
