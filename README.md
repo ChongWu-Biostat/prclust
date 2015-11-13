@@ -1,5 +1,5 @@
 # prclust
-Penalzied regression based clustering 
+Penalized regression based clustering 
 
 ## Install the package
 We test it on R 3.2.1 in Linux server and 3.2.2 in Windows and Mac. *Note that for windows user, we need install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first. For Mac user, we need install [gfortran](https://cran.r-project.org/bin/macosx/tools/).*
