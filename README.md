@@ -1,4 +1,4 @@
-# prclust  [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/prclust)](http://cran.rstudio.com/package=prclust) [![Downloads](http://cranlogs.r-pkg.org/badges/aSPU?color=brightgreen)](http://www.r-pkg.org/pkg/aSPU)
+# prclust  [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/prclust)](http://cran.rstudio.com/package=prclust) [![Downloads](http://cranlogs.r-pkg.org/badges/prclust?color=brightgreen)](http://www.r-pkg.org/pkg/prclust)
 
 Penalized regression based clustering 
 
