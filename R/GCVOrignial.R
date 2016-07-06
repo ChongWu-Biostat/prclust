@@ -10,7 +10,13 @@ GDF.Step23 <- function(seed,data,lambda1,lambda2,tau,mumethods, methods,sigma,al
     data1 = data + deltaB
     if (algorithm == 1){
         rho = lambda1
-        a = .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data1, rho, lambda2, tau, mumethods, methods,epsilon)
+        if(methods == 0 && mumethods == 0) {
+            abs_res = 0.5
+            rel_res = 0.5
+            a = .Call('prclust_DCADMM', PACKAGE = 'prclust', data, rho, lambda2, tau, abs_res , rel_res )
+        } else {
+            a = .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau,mumethods, methods,epsilon)
+        }
     } else {
         a =    .Call('prclust_PRclustOriginal', PACKAGE = 'prclust', data1, lambda1, lambda2, tau,mumethods, methods)
 
@@ -96,8 +102,14 @@ GCV <- function(data,lambda1,lambda2,tau,sigma,B=100,loss.method = c("quadratic"
     ## calculate the original mu
     if (nalgorithm == 1){
         rho = lambda1
-        a = .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau,mumethods, methods,epsilon)
-    } else {
+        if(methods == 0 && mumethods == 0) {
+            abs_res = 0.5
+            rel_res = 0.5
+            a = .Call('prclust_DCADMM', PACKAGE = 'prclust', data, rho, lambda2, tau, abs_res , rel_res )
+        } else {
+            a = .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau,mumethods, methods,epsilon)
+        }
+  } else {
         a =    .Call('prclust_PRclustOriginal', PACKAGE = 'prclust', data, lambda1, lambda2, tau, mumethods, methods)
         
     }

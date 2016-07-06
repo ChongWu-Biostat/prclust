@@ -17,12 +17,36 @@ is_zero_theta <- function(theta, j, ndim) {
     .Call('prclust_is_zero_theta', PACKAGE = 'prclust', theta, j, ndim)
 }
 
-stopping_criteria <- function(mu, mu1, ndim, numbers, count) {
-    .Call('prclust_stopping_criteria', PACKAGE = 'prclust', mu, mu1, ndim, numbers, count)
+stopping_criteria <- function(mu, mu1, ndim, numbers, count, epsilon) {
+    .Call('prclust_stopping_criteria', PACKAGE = 'prclust', mu, mu1, ndim, numbers, count, epsilon)
 }
 
-PRclustADMM <- function(data, rho, lambda2, tau, mumethod = 0L, methods = 0L) {
-    .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau, mumethod, methods)
+cal_primalInterValue <- function(mu, ndim, numbers) {
+    .Call('prclust_cal_primalInterValue', PACKAGE = 'prclust', mu, ndim, numbers)
+}
+
+cal_primalInterValue2 <- function(theta, ndim, numbers) {
+    .Call('prclust_cal_primalInterValue2', PACKAGE = 'prclust', theta, ndim, numbers)
+}
+
+cal_relResInterValue <- function(u, rho, ndim, numbers) {
+    .Call('prclust_cal_relResInterValue', PACKAGE = 'prclust', u, rho, ndim, numbers)
+}
+
+cal_primalRes <- function(mu, theta, ndim, numbers) {
+    .Call('prclust_cal_primalRes', PACKAGE = 'prclust', mu, theta, ndim, numbers)
+}
+
+cal_dualRes <- function(theta, theta1, rho, ndim, numbers) {
+    .Call('prclust_cal_dualRes', PACKAGE = 'prclust', theta, theta1, rho, ndim, numbers)
+}
+
+stopping_criteria2 <- function(mu, theta, theta1, u, rho, abs_res, rel_res, ndim, numbers, count) {
+    .Call('prclust_stopping_criteria2', PACKAGE = 'prclust', mu, theta, theta1, u, rho, abs_res, rel_res, ndim, numbers, count)
+}
+
+PRclustADMM <- function(data, rho, lambda2, tau, mumethod = 0L, methods = 0L, epsilon = 0.001) {
+    .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau, mumethod, methods, epsilon)
 }
 
 clusterStat <- function(trueGroup, group) {
@@ -41,9 +65,30 @@ judge_iteration <- function(data, mu, theta, mu1, theta1, lambda1, lambda2, tau,
     .Call('prclust_judge_iteration', PACKAGE = 'prclust', data, mu, theta, mu1, theta1, lambda1, lambda2, tau, ndim, numbers, count, methods)
 }
 
+judge_iteration2 <- function(PRmu, mu, epsilon, ndim, numbers, count) {
+    .Call('prclust_judge_iteration2', PACKAGE = 'prclust', PRmu, mu, epsilon, ndim, numbers, count)
+}
+
 PRclustOriginal <- function(data, lambda1, lambda2, tau, mumethod = 0L, methods = 0L) {
     .Call('prclust_PRclustOriginal', PACKAGE = 'prclust', data, lambda1, lambda2, tau, mumethod, methods)
 }
+
+PRclust3Original <- function(data, mu3, theta3, lambda1, lambda2, tau, methods = 0L) {
+    .Call('prclust_PRclust3Original', PACKAGE = 'prclust', data, mu3, theta3, lambda1, lambda2, tau, methods)
+}
+
+cal_S_ADMM <- function(data, theta, theta2, mu, lambda2, tau, ndim, numbers) {
+    .Call('prclust_cal_S_ADMM', PACKAGE = 'prclust', data, theta, theta2, mu, lambda2, tau, ndim, numbers)
+}
+
+DCADMM <- function(data, rho, lambda2, tau, abs_res = 0.5, rel_res = 0.5) {
+    .Call('prclust_DCADMM', PACKAGE = 'prclust', data, rho, lambda2, tau, abs_res, rel_res)
+}
+
+DCADMMWarm <- function(data, mus, thetas, rho, lambda2, tau, abs_res = 0.5, rel_res = 0.5) {
+    .Call('prclust_DCADMMWarm', PACKAGE = 'prclust', data, mus, thetas, rho, lambda2, tau, abs_res, rel_res)
+}
+
 
 
 
@@ -103,16 +148,26 @@ PRclust <- function(data, lambda1, lambda2, tau, loss.method = c("quadratic","la
     
     if( nalgorithm ==1){
         rho = lambda1
-        res = .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau,mumethods, methods,epsilon)
+        if(methods == 0 && mumethods == 0) {
+            abs_res = 0.5
+            rel_res = 0.5
+            res = .Call('prclust_DCADMM', PACKAGE = 'prclust', data, rho, lambda2, tau, abs_res , rel_res )
+            final.count = sum(res$count2)
+        } else {
+            res = .Call('prclust_PRclustADMM', PACKAGE = 'prclust', data, rho, lambda2, tau,mumethods, methods,epsilon)
+            final.count = res$count
+        }
+    
     } else {
         if (mumethods!= 0 || methods >=2)
         {
             stop("Quadtraic penalty based algorithm cannot deal with the selected objective function. You can try ADMM instead.")
         }
         res = .Call('prclust_PRclustOriginal', PACKAGE = 'prclust', data, lambda1, lambda2, tau, mumethods,methods)
+        final.count = res$count
     }
     
-    out = list(mu = res$mu,count = res$count,group = res$group,
+    res = list(mu = res$mu,count = final.count,group = res$group,
     theta = res$theta,lambda1 = lambda1, lambda2 = lambda2,tau = tau, method = methods, algorithm = nalgorithm)
     class(res) = "prclust"
     res
