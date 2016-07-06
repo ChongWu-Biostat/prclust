@@ -47,7 +47,7 @@ PRclustOriginal <- function(data, lambda1, lambda2, tau, mumethod = 0L, methods 
 
 
 
-clusterStat <- function(trueGroup, group) {
+clustStat <- function(trueGroup, group) {
     x = as.vector(trueGroup)
     y = as.vector(group)
     if (length(x) != length(y))
@@ -118,7 +118,7 @@ PRclust <- function(data, lambda1, lambda2, tau, loss.method = c("quadratic","la
     res
 }
 
-print.clusterStat <-function(x, ...) {
+print.clustStat <-function(x, ...) {
     cat("External evaluation of cluster results:\n")
     cat(paste("The Rand index: ",x$Rand,"\n",sep = ""))
     cat(paste("The adjusted rand index: ",x$AdjustedRand,"\n",sep = ""))

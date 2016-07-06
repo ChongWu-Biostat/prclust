@@ -1,5 +1,5 @@
-\name{clusterStat}
-\alias{clusterStat}
+\name{clustStat}
+\alias{clustStat}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 External Evaluation of Cluster Results
@@ -8,7 +8,7 @@ External Evaluation of Cluster Results
 Suppose we know the true cluster results beforehand. clusterStat provides Rand, adjusted Rand, Jaccard index to measure the quality of a cluster results.
 }
 \usage{
-clusterStat(trueGroup, group)
+clustStat(trueGroup, group)
 }
 \arguments{
   \item{trueGroup}{The true cluster results.}
@@ -31,7 +31,7 @@ Chong Wu
 	a
 	b <- rep(c(4:6),3)
 	b
-	clusterStat(a,b)
+	clustStat(a,b)
 }
 
-\keyword{clusterStat}
+\keyword{clustStat}
