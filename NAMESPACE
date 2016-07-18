@@ -1,5 +1,5 @@
 useDynLib(prclust)
-export(PRclust,GCV, clustStat)
+export(PRclust,GCV, clustStat,stability)
 importFrom("stats", "coefficients", "lm", "rnorm")
 import(parallel)
 importFrom(Rcpp, evalCpp)
