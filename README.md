@@ -2,6 +2,10 @@
 
 **prclust** is a new R package that makes it incredibly easy to use penalized regression based clustering method with R. 
 
+## Benefits
+* It can treat some complex clustering situations, for example, in the presence of non-convex clusters, in which traditional methods such as K-means break down.
+* Apply or modify many established results and techniques, such as model selection criteria, in regression to clustering. 
+
 ## Features
 
 * Two algorithms (DC-ADMM and quadratic penalty based algorithm) to implement penalized regression based clustering.
@@ -29,7 +33,7 @@ Clustering analysis is regarded as unsupervised learning in absence of a class l
 * Pan Wei, Xiaotong Shen, and Binghui Liu. "Cluster Analysis: Unsupervised Learning via Supervised Learning with a Non-convex Penalty." *The Journal of Machine Learning Research* 14.1 (2013):1865-1889.
 * Chong Wu, Sunghoon Kwon, Xiaotong Shen and Wei Pan. "A new Algorithm and Theory for Penalized Regression-based Clustering", submitted. 
 
-```
+```r
 library("prclust")
 ## generate the data
 data = matrix(NA,2,100)
@@ -51,7 +55,7 @@ A bonus with the regression approach to clustering is the potential application 
 
 We try with various tuning parameter values, obtaining their corresponding GDFs and thus GCV statistics, then choose the set of the tuning parameters with the minimum GCV statistic.
 
-```
+```r
 #case 1
 gcv1 = GCV(data,lambda1=1,lambda2=1,tau=0.5,sigma=0.25)
 gcv1
@@ -69,7 +73,7 @@ The main idea of the method is based on cross-validation. That is,
 * Measure how well the training set clusters predict the test clusters.
 *  Try with various tuning parameter values, obtaining their corresponding statbility based statistics average prediction strengths, then choose the set of the tuning parameters with the maximum average prediction stength.
 
-```
+```r
 #case 1
 stab1 = stability(data,rho=1,lambda=1,tau=0.5,n.times = 10)
 stab1
@@ -82,7 +86,166 @@ stab2
 ## Evaluating the clustering results
 We provide a function *clusterStat*, which calculates Rand, adjusted Rand, Jaccard index, measuring the agreement between estimated cluster and the truth with a higher value indicating a higher agreement.
 
-```
+```r
 truth = c(rep(1,50),rep(2,50))
 clustStat(a$group,truth)
 ```
+
+## Other examples
+Some examples have been provided for further illustrating the performance of prclust.
+
+```r
+
+###################################################
+#### case 2
+###################################################
+x1 = -1 + 2*c(0:99)/99
+data = matrix(NA,2,200)
+data[1,1:100] = x1
+data[2,1:100] = (rbinom(100,1,0.5)*2-1)*sqrt(1-x1^2)+runif(100,min = -0.1,max = 0.1)
+
+x2 = -2 + 4*c(0:99)/99
+data[1,101:200] = x2
+data[2,101:200] = (rbinom(100,1,0.5)*2-1)*sqrt(4-x2^2)+runif(100,min = -0.1,max = 0.1)
+## set the tunning parameter
+lambda1 =1
+lambda2 = 30
+tau = 0.6
+a =PRclust(data,data,lambda1,lambda2,tau)
+a
+## quadratic penalty
+lambda1 =1
+lambda2 = 1
+tau = 0.5
+a =PRclust(data,data,lambda1,lambda2,tau, algorithm ="Quadratic")
+a
+
+##################################################
+### case 3
+##################################################
+data = matrix(runif(10*200),10,200)
+## set the tunning parameter
+lambda1 =1
+lambda2 =5
+tau = 1
+a =PRclust(data,lambda1,lambda2,tau)
+a
+
+## quadratic penalty
+lambda1 =1
+lambda2 =1
+tau = 1
+a =PRclust(data,lambda1,lambda2,tau, algorithm ="Quadratic")
+a
+##################################################
+### case 4
+##################################################
+### generate the data set, it's kind of complicate
+judge = 1
+while(judge != 0)
+{
+    tempCenter = matrix(rnorm(12,0,5),3,4)
+    c1 = tempCenter[,1]
+    c2 = tempCenter[,2]
+    c3 = tempCenter[,3]
+    c4 = tempCenter[,4]
+
+    tempObs1 = 25 + rbinom(1,1,0.5)*25
+    tempObs2 = 25 + rbinom(1,1,0.5)*25
+    tempObs3 = 25 + rbinom(1,1,0.5)*25
+    tempObs4 = 25 + rbinom(1,1,0.5)*25
+
+    Obs = tempObs1 + tempObs2 + tempObs3 + tempObs4
+    data = matrix(NA,3,Obs)
+    data[1,1:tempObs1] = rnorm(tempObs1,c1[1],1)
+    data[2,1:tempObs1] = rnorm(tempObs1,c1[2],1)
+    data[3,1:tempObs1] = rnorm(tempObs1,c1[3],1)
+
+    data[1,(tempObs1+1):(tempObs1 + tempObs2)] = rnorm(tempObs2,c2[1],1)
+    data[2,(tempObs1+1):(tempObs1 + tempObs2)] = rnorm(tempObs2,c2[2],1)
+    data[3,(tempObs1+1):(tempObs1 + tempObs2)] = rnorm(tempObs2,c2[3],1)
+
+    data[1,(tempObs1+tempObs2+1):(tempObs1 + tempObs2 +tempObs3)] = rnorm(tempObs3,c3[1],1)
+    data[2,(tempObs1+tempObs2+1):(tempObs1 + tempObs2 +tempObs3)] = rnorm(tempObs3,c3[2],1)
+    data[3,(tempObs1+tempObs2+1):(tempObs1 + tempObs2 +tempObs3)] = rnorm(tempObs3,c3[3],1)
+
+    data[1,(tempObs1 + tempObs2 +tempObs3+1):Obs] = rnorm(tempObs4,c4[1],1)
+    data[2,(tempObs1 + tempObs2 +tempObs3+1):Obs] = rnorm(tempObs4,c4[2],1)
+    data[3,(tempObs1 + tempObs2 +tempObs3+1):Obs] = rnorm(tempObs4,c4[3],1)
+    
+    a =as.matrix(dist(t(data)))
+    if((min(a[1:tempObs1,(tempObs1+1):Obs]) <1 | min(a[(tempObs1+1):(tempObs1+tempObs2),(tempObs1+tempObs2+1):Obs])<1 |min(a[(tempObs1+tempObs2+1):(tempObs1+tempObs2+tempObs3),(tempObs1+tempObs2+tempObs3+1):Obs])<1 )== 0)
+    judge =0
+}
+
+## set the tunning parameter
+lambda1 =1
+lambda2 =10
+tau =3
+a =PRclust(data,lambda1,lambda2,tau)
+a
+
+## quadratic penalty
+lambda1 =1
+lambda2 =1.8
+tau =2.3
+a =PRclust(data,lambda1,lambda2,tau, algorithm ="Quadratic")
+a
+
+#############################################
+#### case 5
+#############################################
+## generate the data set
+x1 = -0.5 + c(0:99)/99
+data = matrix(NA,3,200)
+data[1,1:100] = x1 + rnorm(100,0,0.1)
+data[2,1:100] = x1 + rnorm(100,0,0.1)
+data[3,1:100] = x1 + rnorm(100,0,0.1)
+
+data[1,101:200] = x1 + 2 + rnorm(100,0,0.1)
+data[2,101:200] = x1 + 2 + rnorm(100,0,0.1)
+data[3,101:200] = x1 + 2 + rnorm(100,0,0.1)
+
+## set the tunning parameter
+lambda1 =1
+lambda2 = 1
+tau = 0.5
+a =PRclust(data,lambda1,lambda2,tau)
+a
+
+## quadratic penalty
+lambda1 =1
+lambda2 = 0.45
+tau = 0.35
+a =PRclust(data,lambda1,lambda2,tau)
+a
+
+#############################################
+### case 6
+############################################
+data = matrix(NA,2,150)
+data[1,1:50] =1.5*sin(2*pi*(30+c(0:49)*5)/360)
+data[2,1:50] =1.5*cos(2*pi*(30+c(0:49)*5)/360) + runif(50,-0.025,0.025)
+
+data[1,51:100] = rnorm(50,0,0.1)
+data[2,51:100] = rnorm(50,0,0.1)
+
+data[1,101:150] = rnorm(50,0.8,0.1)
+data[2,101:150] = rnorm(50,0,0.1)
+#plot(data[1,],data[2,])
+## set the tunning parameter
+lambda1 =1
+lambda2 = 1
+tau = 0.35
+a =PRclust(data,lambda1,lambda2,tau)
+a
+
+# quadratic penalty
+## set the tunning parameter
+lambda1 =1
+lambda2 = 0.5
+tau = 0.4
+a =PRclust(data,lambda1,lambda2,tau, algorithm ="Quadratic")
+a
+```
+
