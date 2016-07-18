@@ -2,6 +2,8 @@
 
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/prclust)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/aSPU)
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/MiSPU)
+
 
 
 Penalized regression based clustering $p$
