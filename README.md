@@ -1,6 +1,6 @@
 # prclust  [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/prclust)](http://cran.rstudio.com/package=prclust) [![Downloads](http://cranlogs.r-pkg.org/badges/prclust?color=brightgreen)](http://www.r-pkg.org/pkg/aSPU)
 
-Penalized regression based clustering 
+Penalized regression based clustering $p$
 
 ## Install the package
 We test it on R 3.2.1 in Linux server and 3.2.2 in Windows and Mac. *Note that for windows user, we need install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) first. For Mac user, we need install [gfortran](https://cran.r-project.org/bin/macosx/tools/).*
