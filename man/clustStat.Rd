@@ -37,3 +37,4 @@ Chong Wu
 	clustStat(a,b)
 }
 
+\keyword{clustStat}

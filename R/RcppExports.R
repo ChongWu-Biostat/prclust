@@ -24,7 +24,7 @@ clustStat <- function(trueGroup, group) {
     out["Rand"] <- RAND
     out["AdjustedRand"] <- ARI
     out["Jaccard"] <- Jaccard
-    class(out) <- "clusterStat"
+    class(out) <- "clustStat"
     out
 }
 
