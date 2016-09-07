@@ -1,4 +1,4 @@
-# prclust  [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/prclust)](http://cran.rstudio.com/package=prclust) [![Downloads](http://cranlogs.r-pkg.org/badges/prclust?color=brightgreen)](http://www.r-pkg.org/pkg/prclust)![downloads](http://cranlogs.r-pkg.org/badges/grand-total/aSPU)
+# prclust  [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/prclust)](http://cran.rstudio.com/package=prclust) [![Downloads](http://cranlogs.r-pkg.org/badges/prclust?color=brightgreen)](http://www.r-pkg.org/pkg/highmean)![downloads](http://cranlogs.r-pkg.org/badges/grand-total/highmean)
 
 **prclust** is a new R package that makes it incredibly easy to use penalized regression based clustering method with R. 
 
