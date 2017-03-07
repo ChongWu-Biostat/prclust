@@ -31,7 +31,7 @@ devtools::install_github("ChongWu-Biostat/prclust")
 Clustering analysis is regarded as unsupervised learning in absence of a class label, as opposed to supervised learning. Over the last few years, a new framework of clustering analysis was introduced by treating it as a penalized regression problem based on over-parameterization. Specifically, we parameterize p-dimensional observations with its own centroid. Two observations are said to belong to the same cluster if their corresponding centroids are equal. Then clustering analysis is formulated to identify a small subset of distinct values of these centroids via solving a penalized regression problem. For more details, see the following two papers.
 
 * Pan Wei, Xiaotong Shen, and Binghui Liu. "Cluster Analysis: Unsupervised Learning via Supervised Learning with a Non-convex Penalty." *The Journal of Machine Learning Research* 14.1 (2013):1865-1889.
-* Chong Wu, Sunghoon Kwon, Xiaotong Shen and Wei Pan. "A new Algorithm and Theory for Penalized Regression-based Clustering", submitted. 
+* Wu C, Kwon S, Shen X, Pan W. A New Algorithm and Theory for Penalized Regression-based Clustering. Journal of Machine Learning Research. 2016;17(188):1-25.  
 
 ```r
 library("prclust")
