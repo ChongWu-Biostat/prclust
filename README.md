@@ -111,13 +111,13 @@ data[2,101:200] = (rbinom(100,1,0.5)*2-1)*sqrt(4-x2^2)+runif(100,min = -0.1,max 
 lambda1 =1
 lambda2 = 30
 tau = 0.6
-a =PRclust(data,data,lambda1,lambda2,tau)
+a =PRclust(data,lambda1,lambda2,tau)
 a
 ## quadratic penalty
 lambda1 =1
 lambda2 = 1
 tau = 0.5
-a =PRclust(data,data,lambda1,lambda2,tau, algorithm ="Quadratic")
+a =PRclust(data,lambda1,lambda2,tau, algorithm ="Quadratic")
 a
 
 ##################################################
